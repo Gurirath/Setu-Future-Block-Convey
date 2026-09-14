@@ -1,7 +1,9 @@
+import time
+
 from agent.eligibility import EligibilityResult, ELIGIBLE, NOT_ELIGIBLE, INSUFFICIENT_INFO
 from agent.profile import UserProfile, scheme_id_from_clause_id
 from agent.query_builder import build_query
-from agent.llm_client import get_client, MODEL
+from agent.llm_client import get_client, MODEL, record_llm_trace
 from retrieval.retrieve import retrieve
 
 FALLBACK_TOP_K = 5
@@ -44,13 +46,17 @@ def check_eligibility_via_llm(scheme_id: str, profile: UserProfile) -> Eligibili
         "REASON: <one sentence>"
     )
 
+    messages = [{"role": "user", "content": prompt}]
+    start = time.monotonic()
     try:
         response = client.messages.create(
             model=MODEL,
             max_tokens=150,
-            messages=[{"role": "user", "content": prompt}],
+            messages=messages,
         )
         text = response.content[0].text
+        latency_ms = int((time.monotonic() - start) * 1000)
+        record_llm_trace(MODEL, messages, text, latency_ms)
     except Exception:
         return EligibilityResult(scheme_id, INSUFFICIENT_INFO, ["LLM reasoning call failed"], [])
 

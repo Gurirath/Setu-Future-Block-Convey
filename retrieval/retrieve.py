@@ -41,4 +41,5 @@ def get_clause(clause_id: str, persist_dir: str = "chroma_store") -> dict | None
         "clause_id": result["ids"][0],
         "scheme": result["metadatas"][0]["scheme_name"],
         "text": result["documents"][0],
+        "clause_type": result["metadatas"][0].get("clause_type"),
     }

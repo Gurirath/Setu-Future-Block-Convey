@@ -1,5 +1,7 @@
+import time
+
 from agent.compose import Claim
-from agent.llm_client import get_client, MODEL
+from agent.llm_client import get_client, MODEL, record_llm_trace
 from retrieval.retrieve import get_clause
 
 
@@ -15,13 +17,17 @@ def entails(premise: str, hypothesis: str) -> bool:
         "Does the scheme clause fully support this claim, with no unsupported facts "
         "added beyond what the clause states? Answer with exactly one word: YES or NO."
     )
+    messages = [{"role": "user", "content": prompt}]
+    start = time.monotonic()
     try:
         response = client.messages.create(
             model=MODEL,
             max_tokens=5,
-            messages=[{"role": "user", "content": prompt}],
+            messages=messages,
         )
         answer = response.content[0].text.strip().upper()
+        latency_ms = int((time.monotonic() - start) * 1000)
+        record_llm_trace(MODEL, messages, answer, latency_ms)
         return answer.startswith("YES")
     except Exception:
         return False

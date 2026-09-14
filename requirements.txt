@@ -1,3 +1,6 @@
 chromadb
 sentence-transformers
 anthropic
+google-genai
+python-dotenv
+prismtrace-sdk>=0.4.3
