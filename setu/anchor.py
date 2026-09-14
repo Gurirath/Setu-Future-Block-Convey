@@ -7,7 +7,9 @@ import re
 from dataclasses import dataclass
 
 BLOCK_SPLIT = re.compile(r"\n")
-WORD = re.compile(r"[a-z0-9]+")
+# Unicode-aware: an ASCII-only class tokenises Indic script to nothing,
+# which silently makes every non-English query match zero documents.
+WORD = re.compile(r"\w+", re.UNICODE)
 # A heading-ish line: short, no terminal period, often numbered.
 HEADING = re.compile(r"^\s*(?:\d+(?:\.\d+)*[.)]?\s+)?[^.]{3,80}$")
 

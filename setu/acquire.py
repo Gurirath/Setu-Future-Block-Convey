@@ -4,6 +4,7 @@ Tries progressively heavier strategies to obtain the real bytes of a source.
 If every rung fails, it raises. It never substitutes generated text for a fetch.
 """
 import io
+import os
 from dataclasses import dataclass, field
 
 import requests
@@ -77,9 +78,57 @@ def rung_headless(url: str) -> Document:
     return make_document(raw, _html_to_text(raw, "utf-8"), url, status, "text/html", "headless+html")
 
 
+def rung_linked_pdf(url: str) -> Document:
+    """Follow the most guideline-looking PDF linked from the page.
+
+    Portal landing pages are usually dashboards; the actual rules live in a PDF
+    linked from them. Ranking is by link text and filename only -- no scheme
+    vocabulary, and the result must still pass the caller's sufficiency check.
+    """
+    from bs4 import BeautifulSoup
+    from urllib.parse import urljoin
+
+    resp = requests.get(url, timeout=TIMEOUT, headers={"User-Agent": USER_AGENT})
+    resp.raise_for_status()
+    soup = BeautifulSoup(resp.content.decode(resp.encoding or "utf-8", errors="replace"),
+                         "html.parser")
+
+    hints = tuple(h.strip().lower() for h in os.environ.get(
+        "SETU_PDF_HINTS", "guideline,eligibility,criteria,scheme,operational,rules"
+    ).split(",") if h.strip())
+
+    candidates = []
+    for link in soup.find_all("a", href=True):
+        href = link["href"]
+        if ".pdf" not in href.lower():
+            continue
+        label = f"{link.get_text(' ', strip=True)} {href}".lower()
+        score = sum(1 for hint in hints if hint in label)
+        candidates.append((score, urljoin(url, href)))
+    if not candidates:
+        raise RuntimeError("no PDF links found on the page")
+
+    candidates.sort(key=lambda pair: -pair[0])
+    errors = []
+    for _score, pdf_url in candidates[:3]:
+        try:
+            pdf = requests.get(pdf_url, timeout=TIMEOUT,
+                               headers={"User-Agent": USER_AGENT})
+            pdf.raise_for_status()
+            text = _pdf_to_text(pdf.content)
+            if text.strip():
+                return make_document(pdf.content, text, pdf_url, pdf.status_code,
+                                     pdf.headers.get("content-type", "application/pdf"),
+                                     "linked_pdf")
+        except Exception as exc:
+            errors.append(f"{pdf_url}: {type(exc).__name__}")
+    raise RuntimeError("no linked PDF yielded text (" + "; ".join(errors[:2]) + ")")
+
+
 RUNGS = (
     ("http_static", rung_http_static),
     ("headless", rung_headless),
+    ("linked_pdf", rung_linked_pdf),
 )
 
 

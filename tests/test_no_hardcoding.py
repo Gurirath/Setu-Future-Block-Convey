@@ -16,7 +16,9 @@ STATE_TOKENS = ["tamil nadu", "tamilnadu", "karnataka", "maharashtra", "kerala",
                 "odisha", "bihar", "uttar pradesh", "meghalaya"]
 
 GOV_DOMAIN = re.compile(r"[\w.-]+\.(?:gov|nic)\.in", re.I)
-RUPEE_AMOUNT = re.compile(r"(?:rs\.?|rupees)\s*[\d,]+", re.I)
+# \b and a required digit: without them, "rs\.?[\d,]+" matches the "rs," inside
+# ordinary words like "answers, asks" and the guard cries wolf.
+RUPEE_AMOUNT = re.compile(r"\b(?:rs\.?|rupees?)\s*\d[\d,]*", re.I)
 THRESHOLD = re.compile(r"\b(?:age|income|acres?|land)\b\s*[<>=]{1,2}\s*\d+", re.I)
 FAKE_HELPLINE = re.compile(r"1800[\s-]?[x\d]{3}[\s-]?[x\d]{4}", re.I)
 

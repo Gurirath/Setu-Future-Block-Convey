@@ -79,3 +79,26 @@ def test_validation_fails_closed(bad, msg):
 
 def test_validate_accepts_wellformed_rule():
     validate(RULE)
+
+
+def test_leaf_under_not_is_marked_as_an_exclusion():
+    """A matched exclusion must not read as 'condition met'."""
+    rule = {"op": "not", "args": [leaf("eq", "pays_tax", True)]}
+    ev = evaluate(rule, {"pays_tax": True})
+    assert ev.value == FALSE
+    fired = ev.fired[0]
+    assert fired["negated"] is True
+    assert fired["result"] is True      # the exclusion does apply
+    assert fired["helps"] is False      # which is bad news for the applicant
+
+
+def test_leaf_outside_not_helps_when_satisfied():
+    ev = evaluate(leaf("gte", "age", 60), {"age": 70})
+    assert ev.fired[0]["negated"] is False
+    assert ev.fired[0]["helps"] is True
+
+
+def test_double_negation_restores_polarity():
+    rule = {"op": "not", "args": [{"op": "not", "args": [leaf("eq", "x", True)]}]}
+    ev = evaluate(rule, {"x": True})
+    assert ev.fired[0]["negated"] is False and ev.fired[0]["helps"] is True

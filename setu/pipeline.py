@@ -117,6 +117,8 @@ def answer(source_url: str, profile: dict, query_terms: list[str],
                 "condition": f"{fired['field']} {fired['op']} {fired['value']}",
                 "your_value": fired["actual"],
                 "satisfied": fired["result"],
+                "is_exclusion": fired.get("negated", False),
+                "helps_you": fired.get("helps", fired["result"]),
                 "quote": result.quote,
                 "anchor": fired["anchor"],
             })

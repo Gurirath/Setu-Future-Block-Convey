@@ -27,6 +27,32 @@ guard is capable of failing.
 | Providers | `setu/providers.py` | Anthropic or Gemini, selected from environment. The model is a swappable reader, never the decider. |
 | Extract | `setu/extract.py` | Field-agnostic. Parses a reply into whatever type the compiled rule implies, across Indic scripts and digits. |
 | Guardrails | `setu/guardrails.py` | Redacts identifier shapes from user input; flags instruction-shaped text in fetched sources. |
+| Resolve | `setu/resolve.py` | Finds the governing document. A proposed URL is a hypothesis; fetching is the experiment. |
+| Agent | `setu/agent.py` | The multi-turn loop. Asks only what the compiled rule left unknown, in the user's language. |
+| PRISM | `setu/prism.py` | Exports spans as PRISM trajectory steps. Observability never changes behaviour. |
+| Evaluate | `setu/evaluate.py` | Scores behaviour mechanically. No model judges another model. |
+| Web | `setu/web.py` | Local interface showing verdict, clause, source URL and fetch time. |
+
+## Running the interface
+
+```bash
+python scripts/serve.py            # http://127.0.0.1:8000
+python scripts/evaluate.py --prism # golden set scorecard, exported to PRISM
+python scripts/live_check.py <url> --term eligibility --field age=70
+```
+
+## PRISM
+
+```bash
+# .env
+PRISM_API_KEY=...
+PRISM_HOST=...
+PRISM_PROJECT_ID=...
+```
+
+All three are required. Without them export is skipped and the agent runs unchanged --
+traces are written locally to `traces/` either way. Compliance score only moves once
+trajectories actually reach PRISM; committing code does not send anything.
 
 ## Choosing a model provider
 

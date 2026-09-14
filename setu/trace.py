@@ -14,6 +14,7 @@ class Tracer:
         self.trace_id = trace_id or uuid.uuid4().hex[:12]
         self.spans: list[dict] = []
         self._stack: list[str] = []
+        self._closed = 0
         self._sink = sink
 
     @contextmanager
@@ -37,6 +38,12 @@ class Tracer:
         finally:
             self._stack.pop()
             span["duration_ms"] = round((time.time() - span["start"]) * 1000, 2)
+            # Completion order recorded explicitly. Deriving it from the clock is
+            # unreliable: on a coarse timer a whole span can measure 0 ms, which
+            # collapses its completion time back onto its start time and makes a
+            # parent span look like it finished before its own children.
+            self._closed += 1
+            span["seq"] = self._closed
             self.spans.append(span)
 
     def set(self, span: dict, **attrs):

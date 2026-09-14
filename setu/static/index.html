@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setu</title>
+<style>
+  :root{
+    --bg:#f7f7f5; --panel:#ffffff; --ink:#1a1a18; --muted:#6b6b66;
+    --line:#e4e4df; --accent:#1f6f5c; --accent-soft:#e8f2ef;
+    --warn:#8a5a00; --warn-soft:#fdf3e0; --bad:#8c2f2f; --bad-soft:#fbecec;
+    --quote:#f3f3f0; --radius:14px;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  :root:not([data-theme="light"]){ }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14150f; --panel:#1c1e17; --ink:#ececE4; --muted:#9a9a90;
+      --line:#2c2f26; --accent:#7fc9b0; --accent-soft:#172a25;
+      --warn:#e0b366; --warn-soft:#2a2314; --bad:#e08b8b; --bad-soft:#2b1a1a;
+      --quote:#222419;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14150f; --panel:#1c1e17; --ink:#ececE4; --muted:#9a9a90;
+    --line:#2c2f26; --accent:#7fc9b0; --accent-soft:#172a25;
+    --warn:#e0b366; --warn-soft:#2a2314; --bad:#e08b8b; --bad-soft:#2b1a1a;
+    --quote:#222419;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding-block:28px 64px; padding-left:20px; padding-right:20px;}
+  header{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px}
+  h1{font-size:23px; margin:0; letter-spacing:-.02em}
+  .tag{font-size:12px; color:var(--muted)}
+  .lede{color:var(--muted); font-size:13.5px; margin:0 0 22px; max-width:60ch}
+  #log{display:flex; flex-direction:column; gap:14px; margin-bottom:20px}
+  .msg{padding:13px 15px; border-radius:var(--radius); border:1px solid var(--line);
+       background:var(--panel); animation:rise .18s ease-out}
+  @keyframes rise{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){ .msg{animation:none} }
+  .msg.user{background:var(--accent-soft); border-color:transparent; margin-left:auto;
+            max-width:80%; white-space:pre-wrap}
+  .msg.question{border-left:3px solid var(--warn)}
+  .msg.refusal{border-left:3px solid var(--bad); background:var(--bad-soft)}
+  .msg.answer{border-left:3px solid var(--accent)}
+  .verdict{display:inline-block; font-size:11px; font-weight:650; letter-spacing:.07em;
+           text-transform:uppercase; padding:3px 9px; border-radius:999px; margin-bottom:9px}
+  .v-eligible{background:var(--accent-soft); color:var(--accent)}
+  .v-not_eligible{background:var(--warn-soft); color:var(--warn)}
+  .v-refused{background:var(--bad-soft); color:var(--bad)}
+  .body{margin:0}
+  .cite{margin-top:12px; padding:11px 13px; background:var(--quote);
+        border-radius:10px; border:1px solid var(--line)}
+  .cite .cond{font-family:var(--mono); font-size:12.5px; color:var(--muted)}
+  .cite blockquote{margin:7px 0 0; padding-left:11px; border-left:2px solid var(--line);
+                   font-size:13.5px}
+  .ok{color:var(--accent); font-weight:600}
+  .no{color:var(--bad); font-weight:600}
+  .prov{margin-top:12px; padding-top:10px; border-top:1px dashed var(--line);
+        font-size:12px; color:var(--muted); display:flex; gap:14px; flex-wrap:wrap}
+  .prov a{color:inherit}
+  .spans{display:flex; gap:5px; flex-wrap:wrap; margin-top:9px}
+  .span{font-family:var(--mono); font-size:10.5px; padding:2px 7px; border-radius:5px;
+        background:var(--quote); border:1px solid var(--line); color:var(--muted)}
+  .span.error{background:var(--bad-soft); color:var(--bad); border-color:transparent}
+  form{display:flex; gap:9px; position:sticky; bottom:0;
+       background:linear-gradient(transparent, var(--bg) 22%); padding-top:14px}
+  input[type=text]{flex:1; padding:12px 14px; border-radius:11px; font:inherit;
+                   border:1px solid var(--line); background:var(--panel); color:var(--ink)}
+  input[type=text]:focus{outline:2px solid var(--accent); outline-offset:1px}
+  button{padding:12px 19px; border-radius:11px; border:0; background:var(--accent);
+         color:#fff; font:inherit; font-weight:600; cursor:pointer}
+  button:disabled{opacity:.5; cursor:default}
+  .hint{font-size:12px; color:var(--muted); margin-top:9px}
+  .hint button{background:none; color:var(--accent); border:0; padding:0 2px;
+               font-weight:500; font-size:12px; text-decoration:underline; cursor:pointer}
+  .dots::after{content:"";animation:dots 1.1s steps(4,end) infinite}
+  @keyframes dots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Setu</h1>
+    <span class="tag">answers only what it can prove against a source it just fetched</span>
+  </header>
+  <p class="lede">Ask in any language. Every verdict shows the clause it rests on, the page
+     it came from, and when that page was read. If it cannot prove something, it refuses.</p>
+
+  <div id="log" aria-live="polite"></div>
+
+  <form id="form" autocomplete="off">
+    <input id="input" type="text" placeholder="Describe your situation…" aria-label="Your message">
+    <button id="send" type="submit">Ask</button>
+  </form>
+  <p class="hint">
+    <button type="button" id="reset">Start over</button> ·
+    conversation <span id="cid" class="tag"></span>
+  </p>
+</div>
+
+<script>
+const log = document.getElementById('log');
+const form = document.getElementById('form');
+const input = document.getElementById('input');
+const send = document.getElementById('send');
+let conversationId = 'c' + Math.random().toString(36).slice(2, 9);
+document.getElementById('cid').textContent = conversationId;
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function add(cls, html){
+  const el = document.createElement('div');
+  el.className = 'msg ' + cls;
+  el.innerHTML = html;
+  log.appendChild(el);
+  el.scrollIntoView({behavior:'smooth', block:'end'});
+  return el;
+}
+
+function render(r){
+  const verdict = r.kind === 'refusal' ? 'refused' : (r.outcome || '');
+  let html = '';
+  if (verdict) html += `<span class="verdict v-${esc(verdict)}">${esc(verdict.replace('_',' '))}</span>`;
+  html += `<p class="body">${esc(r.text)}</p>`;
+
+  (r.citations || []).forEach(c => {
+    html += `<div class="cite">
+      <div class="cond">${c.is_exclusion ? 'exclusion: ' : ''}${esc(c.condition)} ·
+        your value: ${esc(c.your_value)} ·
+        <span class="${c.helps_you ? 'ok' : 'no'}">${
+          c.is_exclusion ? (c.satisfied ? 'this exclusion applies to you' : 'exclusion does not apply')
+                         : (c.satisfied ? 'condition met' : 'condition not met')}</span></div>
+      <blockquote>${esc(c.quote)}</blockquote></div>`;
+  });
+
+  if (r.refusal_reason) html += `<div class="cite"><div class="cond">${esc(r.refusal_reason)}</div></div>`;
+
+  const bits = [];
+  if (r.source_url) bits.push(`source <a href="${esc(r.source_url)}" target="_blank" rel="noopener">${esc(r.source_url)}</a>`);
+  if (r.fetched_at) bits.push(`read ${esc(r.fetched_at)}`);
+  if (r.redactions && r.redactions.length) bits.push(`redacted: ${esc(r.redactions.join(', '))}`);
+  if (r.prism) bits.push(`PRISM ${esc(r.prism.status)}${r.prism.trajectory_id ? ' · ' + esc(r.prism.trajectory_id) : ''}`);
+  if (r.trace_id) bits.push(`trace ${esc(r.trace_id)}`);
+  if (bits.length) html += `<div class="prov">${bits.map(b => `<span>${b}</span>`).join('')}</div>`;
+
+  if (r.spans && r.spans.length){
+    html += `<div class="spans">` + r.spans.map(s =>
+      `<span class="span ${s.status === 'error' ? 'error' : ''}">${esc(s.name)}${
+        s.duration_ms != null ? ' ' + Math.round(s.duration_ms) + 'ms' : ''}</span>`).join('') + `</div>`;
+  }
+  return html;
+}
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const message = input.value.trim();
+  if (!message) return;
+  add('user', esc(message));
+  input.value = '';
+  send.disabled = true;
+  const pending = add('', '<span class="tag dots">reading the official source</span>');
+
+  try{
+    const res = await fetch('/api/turn', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message, conversation_id: conversationId})
+    });
+    const data = await res.json();
+    pending.className = 'msg ' + (data.kind || 'answer');
+    pending.innerHTML = render(data);
+  }catch(err){
+    pending.className = 'msg refusal';
+    pending.innerHTML = `<p class="body">Could not reach the agent.</p>
+      <div class="cite"><div class="cond">${esc(err.message)}</div></div>`;
+  }finally{
+    send.disabled = false;
+    input.focus();
+  }
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+  conversationId = 'c' + Math.random().toString(36).slice(2, 9);
+  document.getElementById('cid').textContent = conversationId;
+  log.innerHTML = '';
+  input.focus();
+});
+input.focus();
+</script>
+</body>
+</html>

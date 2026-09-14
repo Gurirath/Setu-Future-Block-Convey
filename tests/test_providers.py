@@ -81,3 +81,81 @@ def test_real_providers_satisfy_the_generate_contract():
     for cls in (AnthropicProvider, GeminiProvider):
         params = inspect.signature(cls.generate).parameters
         assert "prompt" in params and "schema" in params, cls.__name__
+
+
+def test_transient_rate_limit_is_retried(monkeypatch):
+    import setu.providers as providers
+    monkeypatch.setattr(providers.time, "sleep", lambda s: None)
+    calls = []
+
+    def flaky():
+        calls.append(1)
+        if len(calls) < 3:
+            raise RuntimeError("429 RESOURCE_EXHAUSTED. Please retry in 1.5s")
+        return "ok"
+
+    assert providers.with_retries(flaky) == "ok"
+    assert len(calls) == 3
+
+
+def test_non_transient_error_is_not_retried(monkeypatch):
+    import setu.providers as providers
+    monkeypatch.setattr(providers.time, "sleep", lambda s: None)
+    calls = []
+
+    def broken():
+        calls.append(1)
+        raise ValueError("401 invalid api key")
+
+    with pytest.raises(ValueError):
+        providers.with_retries(broken)
+    assert len(calls) == 1
+
+
+def test_retry_gives_up_and_reraises(monkeypatch):
+    import setu.providers as providers
+    monkeypatch.setattr(providers.time, "sleep", lambda s: None)
+
+    def always():
+        raise RuntimeError("503 overloaded")
+
+    with pytest.raises(RuntimeError, match="503"):
+        providers.with_retries(always)
+
+
+def test_openai_selected_by_its_key(clean_env, recorded, monkeypatch):
+    from setu.providers import BUILDERS
+    monkeypatch.setitem(BUILDERS, "openai", Recorder)
+    clean_env.setenv("OPENAI_API_KEY", "test-key-o")
+    get_provider("openai")
+    assert recorded.instances[-1].api_key == "test-key-o"
+
+
+def test_openai_generate_contract():
+    from setu.providers import OpenAIProvider
+    import inspect
+    params = inspect.signature(OpenAIProvider.generate).parameters
+    assert "prompt" in params and "schema" in params
+
+
+def test_json_mode_only_requested_for_structured_calls():
+    """Plain-text prompts must not come back as quoted JSON strings."""
+    from setu.providers import OpenAIProvider
+    captured = {}
+
+    provider = OpenAIProvider.__new__(OpenAIProvider)
+    provider.model = "test-model"
+
+    class FakeCompletions:
+        def create(self, **kwargs):
+            captured.update(kwargs)
+            msg = type("M", (), {"content": "hi"})()
+            return type("R", (), {"choices": [type("C", (), {"message": msg})()]})()
+
+    provider._client = type("C", (), {
+        "chat": type("Chat", (), {"completions": FakeCompletions()})()})()
+
+    provider.generate("plain question")
+    assert "response_format" not in captured
+    provider.generate("structured", schema={"type": "object"})
+    assert captured["response_format"] == {"type": "json_object"}

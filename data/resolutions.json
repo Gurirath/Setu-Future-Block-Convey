@@ -1,0 +1,42 @@
+{
+  "Am I eligible for farmer income support if I pay income tax?": {
+    "query": "Am I eligible for farmer income support if I pay income tax?",
+    "url": "https://pmkisan.gov.in/",
+    "sha256": "00a5449bf3b3eaa3ad9dfba9edaf210aadde08d35ae69ee56c915391c3b4643f",
+    "relevance": 0.857,
+    "official": false,
+    "resolved_at": "2026-09-14T12:35:44.882973+00:00",
+    "evidence": "PM-Kisan Samman Nidhi\nContact Us\nSitemap\nSkip to main content\nScreen Reader Access\nEnglish\nAssamese\nGujarati\nHindi\nKannada\nMalayalam\nMarathi\nTamil\nTelugu\nUrdu\nLogin\nExternal Logins\nCSC Login\neMitra Lo",
+    "rejected": []
+  },
+  "I am 72 years old and receive no other pension. Do I qualify for old age assistance?": {
+    "query": "I am 72 years old and receive no other pension. Do I qualify for old age assistance?",
+    "url": "https://www.ssa.gov/benefits/ssi/",
+    "sha256": "c4587ef04367cad2cf98a1661546de0870beca001bc0ff259d384de273b30f09",
+    "relevance": 0.333,
+    "official": false,
+    "resolved_at": "2026-09-14T12:40:43.983495+00:00",
+    "evidence": "Supplemental Security Income (SSI) | SSA\nSkip to main content\nAn official website of the United States government\nHere's how you know\nHere's how you know\nOfficial websites use .gov\nA\n.gov\nwebsite belo",
+    "rejected": []
+  },
+  "old age assistance eligibility for applicants": {
+    "query": "old age assistance eligibility for applicants",
+    "url": "https://www.ssa.gov/ssi/eligibility",
+    "sha256": "116c0570607d08dde2998624e59b190782289b8773db5233c02cb88e9cc4ab6f",
+    "relevance": 0.4,
+    "official": false,
+    "resolved_at": "2026-09-14T12:41:16.911594+00:00",
+    "evidence": "Who can get SSI | SSA\nSkip to main content\nAn official website of the United States government\nHere's how you know\nHere's how you know\nOfficial websites use .gov\nA\n.gov\nwebsite belongs to an official ",
+    "rejected": []
+  },
+  "assistance programme for applicants of pension age": {
+    "query": "assistance programme for applicants of pension age",
+    "url": "https://www.gov.uk/pension-credit/eligibility",
+    "sha256": "d758169fec3b6e6d9b33edc3d61dc0ea2ac8addf0e07749a3fd47dfb5457760f",
+    "relevance": 0.4,
+    "official": false,
+    "resolved_at": "2026-09-14T12:41:44.656559+00:00",
+    "evidence": "Pension Credit: Eligibility - GOV.UK\nCookies on GOV.UK\nWe use some essential cookies to make this website work.\nWe’d like to set additional cookies to understand how you use GOV.UK, remember your sett",
+    "rejected": []
+  }
+}

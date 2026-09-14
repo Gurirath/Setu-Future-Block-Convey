@@ -110,15 +110,15 @@ def evaluate(node, profile: dict, ev: Evaluation | None = None) -> Evaluation:
     return ev
 
 
-def _eval_node(node, profile, ev) -> str:
+def _eval_node(node, profile, ev, negated: bool = False) -> str:
     op = node["op"]
 
     if op == "and":
-        return _kleene_and([_eval_node(c, profile, ev) for c in node["args"]])
+        return _kleene_and([_eval_node(c, profile, ev, negated) for c in node["args"]])
     if op == "or":
-        return _kleene_or([_eval_node(c, profile, ev) for c in node["args"]])
+        return _kleene_or([_eval_node(c, profile, ev, negated) for c in node["args"]])
     if op == "not":
-        inner = _eval_node(node["args"][0], profile, ev)
+        inner = _eval_node(node["args"][0], profile, ev, not negated)
         return {TRUE: FALSE, FALSE: TRUE, UNKNOWN: UNKNOWN}[inner]
 
     if op == AUTHORITY_OP:
@@ -140,8 +140,12 @@ def _eval_node(node, profile, ev) -> str:
             ev.unknown_fields.append(field_name)
         return UNKNOWN
 
+    # `negated` records whether this leaf sits under a NOT. Without it a matched
+    # exclusion reads as "condition met", i.e. as good news, when it is the very
+    # reason the person does not qualify.
     ev.fired.append({"field": field_name, "op": op, "value": node["value"],
-                     "actual": actual, "result": result, "anchor": node["anchor"]})
+                     "actual": actual, "result": result, "negated": negated,
+                     "helps": result != negated, "anchor": node["anchor"]})
     return TRUE if result else FALSE
 
 
