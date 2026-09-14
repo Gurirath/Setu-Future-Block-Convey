@@ -1,0 +1,25 @@
+{
+  "scheme_id": "pmayg",
+  "scheme_name": "Pradhan Mantri Awaas Yojana - Gramin (PMAY-G)",
+  "state": "central",
+  "clauses": [
+    {
+      "clause_id": "pmayg-4.1.1",
+      "section_title": "Universe of eligible beneficiaries",
+      "clause_type": "eligibility",
+      "text": "The universe of eligible beneficiaries under PMAY-G will include all the houseless and households living in zero, one or two room with kutcha wall and kutcha roof (kutcha houses) as per SECC data, subject to the exclusion process described in Annexure-I. Additional beneficiaries may be drawn from the Awaas+ list."
+    },
+    {
+      "clause_id": "pmayg-5.1.1",
+      "section_title": "Unit assistance to the beneficiary",
+      "clause_type": "benefit_amount",
+      "text": "Under PMAY-G, the beneficiary is provided unit assistance of Rs. 1.20 lakh in plain areas and Rs. 1.30 lakh in Hill states, North-Eastern States, Difficult Areas and IAP districts for construction of a pucca house."
+    },
+    {
+      "clause_id": "pmayg-annexureI",
+      "section_title": "Exclusion process (Annexure-I)",
+      "clause_type": "exclusion",
+      "text": "All households living in houses with pucca roof and/or pucca wall and households living in houses with more than 2 rooms are filtered out first. From the remaining set of households, all households fulfilling any one of the following 13 automatic exclusion parameters are excluded: owning a motorised two, three or four-wheeler or a fishing boat; owning mechanised three or four-wheeler agricultural equipment; holding a Kisan Credit Card with a credit limit of Rs. 50,000 or above; having any member as a Government employee; having non-agricultural enterprises registered with the Government; having any member of the family earning more than Rs. 10,000 per month; paying income tax; paying professional tax; owning a refrigerator; owning a landline phone; owning 2.5 acres or more of irrigated land with at least one irrigation equipment; owning 5 acres or more of irrigated land for two or more crop seasons; or owning at least 7.5 acres of land with at least one irrigation equipment."
+    }
+  ]
+}

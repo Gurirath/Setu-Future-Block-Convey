@@ -1,0 +1,38 @@
+{
+  "scheme_id": "cmchis",
+  "scheme_name": "Tamil Nadu Chief Minister's Comprehensive Health Insurance Scheme (CMCHIS)",
+  "state": "Tamil Nadu",
+  "clauses": [
+    {
+      "clause_id": "cmchis-1",
+      "section_title": "Overview",
+      "clause_type": "general",
+      "text": "The Tamil Nadu Chief Minister's Comprehensive Health Insurance Scheme (CMCHIS), co-branded as AB-PMJAY-CMCHIS since its 2018 integration with the central Ayushman Bharat PM-JAY scheme, provides cashless health insurance coverage to eligible Tamil Nadu families for a defined list of medical and surgical procedures at network hospitals, as notified under GO(Ms) No.560, Health and Family Welfare Department, Government of Tamil Nadu."
+    },
+    {
+      "clause_id": "cmchis-2",
+      "section_title": "Benefit amount",
+      "clause_type": "benefit_amount",
+      "text": "Eligible families receive cashless treatment coverage of up to Rs. 5,00,000 per family per year across the scheme's listed procedures."
+    },
+    {
+      "clause_id": "cmchis-3.1",
+      "section_title": "Eligibility - Residency",
+      "clause_type": "eligibility",
+      "text": "The applicant must be a resident of Tamil Nadu."
+    },
+    {
+      "clause_id": "cmchis-3.2",
+      "section_title": "Eligibility - Family ration card",
+      "clause_type": "eligibility",
+      "text": "The applicant's name must appear on the family's ration card issued in Tamil Nadu."
+    },
+    {
+      "clause_id": "cmchis-3.3",
+      "section_title": "Eligibility - Income threshold",
+      "clause_type": "eligibility",
+      "text": "The applicant's annual family income must be under Rs. 1,20,000, as notified under GO(Ms) No.560, Health and Family Welfare Department."
+    }
+  ],
+  "last_verified": "2026-09-14"
+}

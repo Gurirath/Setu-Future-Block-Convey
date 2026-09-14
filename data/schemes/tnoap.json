@@ -1,0 +1,38 @@
+{
+  "scheme_id": "tnoap",
+  "scheme_name": "Tamil Nadu Old Age Pension Scheme (Indira Gandhi National Old Age Pension Scheme - Tamil Nadu state component)",
+  "state": "Tamil Nadu",
+  "clauses": [
+    {
+      "clause_id": "tnoap-1",
+      "section_title": "Overview",
+      "clause_type": "general",
+      "text": "The Tamil Nadu Old Age Pension Scheme provides a monthly pension to destitute elderly residents of Tamil Nadu, administered by the state Social Security Schemes department, combining central IGNOAPS assistance with a state top-up."
+    },
+    {
+      "clause_id": "tnoap-2",
+      "section_title": "Benefit amount",
+      "clause_type": "benefit_amount",
+      "text": "Eligible beneficiaries receive a combined monthly pension of approximately Rs. 1,000, comprising the central IGNOAPS share and the Tamil Nadu state contribution."
+    },
+    {
+      "clause_id": "tnoap-3.1",
+      "section_title": "Eligibility - Age",
+      "clause_type": "eligibility",
+      "text": "The applicant must be 60 years of age or older and a resident of Tamil Nadu."
+    },
+    {
+      "clause_id": "tnoap-3.2",
+      "section_title": "Eligibility - Destitution and income",
+      "clause_type": "eligibility",
+      "text": "The applicant must be destitute, with no regular means of subsistence from their own source of income or through support from family members, and family income must fall below the state-notified threshold."
+    },
+    {
+      "clause_id": "tnoap-4.1",
+      "section_title": "Exclusion - Other pension or government support",
+      "clause_type": "exclusion",
+      "text": "Persons already receiving a pension under any other government scheme, or with a family member in regular government employment supporting them, are excluded."
+    }
+  ],
+  "last_verified": "2026-09-14"
+}

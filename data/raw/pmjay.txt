@@ -1,0 +1,21 @@
+SCHEME: Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (PM-JAY)
+STATE: central
+SOURCE: Operation Manual for AB PM-JAY (National Health Authority, April 2022). The nha.gov.in PDF URL specified for this ingestion (https://nha.gov.in/img/resources/Operation%20Manual%20for%20AB%20PM-JAY.pdf) returns the site's single-page-app shell on a direct fetch, not the document itself (verified: HTTP 200, Content-Type text/html, 3.8KB). The identical NHA Operation Manual was retrieved instead from a Kerala State Health Agency mirror (sha.kerala.gov.in). Sections I, III, 6 and 7 below are direct quotes from that manual. The manual does not itself enumerate the detailed SECC-2011 rural deprivation / urban occupational eligibility categories (that lives in a separate NHA/SECC eligibility guidelines document not obtained in this fetch); clauses 3.1 and 3.2 remain authored from well-established public knowledge and are marked as such.
+
+[SECTION I] Overview and beneficiary base
+Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (AB PM-JAY) is the world's largest health assurance scheme fully financed by the government, providing a health cover of Rs. 5 lakhs per family per year for secondary and tertiary care hospitalization to approximately 10.74 crore poor and vulnerable families, around 50 crore beneficiaries, with no restriction on family size, age, or gender. The scheme provides cashless access to healthcare services for the beneficiary at the point of service.
+
+[SECTION III] Benefit amount and coverage
+The scheme provides a health cover of Rs. 5 lakhs per family per year for secondary and tertiary care hospitalization across public and private empanelled hospitals in India, covering over 10.74 crore poor and vulnerable families that form the bottom 40% of the Indian population.
+
+[SECTION 6] Scope of the health benefit package
+Benefits under the scheme's basic risk cover are provided on a cashless basis to beneficiaries up to the limit of Rs. 5,00,000, and include hospitalization expense, day-care treatment where applicable, follow-up care, pre- and post-hospitalization expenses, and coverage for a new-born child or children.
+
+[SECTION 7] Beneficiary identification mechanism
+Eligibility is determined through the Beneficiary Identification System: an operator searches the entitled beneficiary database, drawn from the Socio-Economic Caste Census (SECC), Rashtriya Swasthya Bima Yojana (RSBY), Additional Data Collection Drive (ADCD), and State Health Scheme databases, to determine whether a person is enlisted as a beneficiary. Only persons found in this verified database are covered.
+
+[SECTION 3.1] Eligibility - Rural deprivation criteria (authored, not sourced from the Operation Manual; verify against the primary SECC/HBP eligibility guidelines before production use)
+Households in rural areas identified under specific deprivation and automatic-inclusion categories of the Socio-Economic Caste Census 2011 (SECC 2011) are eligible.
+
+[SECTION 3.2] Eligibility - Urban occupational criteria (authored, not sourced from the Operation Manual; verify against the primary SECC/HBP eligibility guidelines before production use)
+Households in urban areas falling under one of eleven defined occupational vulnerability categories identified in SECC 2011 are eligible.

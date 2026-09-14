@@ -1,0 +1,61 @@
+{
+  "scheme_id": "pmkisan",
+  "scheme_name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+  "state": "central",
+  "clauses": [
+    {
+      "clause_id": "pmkisan-1",
+      "section_title": "Overview",
+      "clause_type": "general",
+      "text": "PM-KISAN is a Central Sector scheme, fully funded by the Government of India, providing income support to landholding farmer families across India."
+    },
+    {
+      "clause_id": "pmkisan-2",
+      "section_title": "Benefit amount",
+      "clause_type": "benefit_amount",
+      "text": "An income support of Rs. 6,000 per year is provided to all landholding farmer families, payable in three equal installments of Rs. 2,000 every four months."
+    },
+    {
+      "clause_id": "pmkisan-3.1",
+      "section_title": "Eligibility - Landholding farmer families",
+      "clause_type": "eligibility",
+      "text": "All landholding farmer families are eligible, subject to the exclusion criteria. The definition of family for the scheme is husband, wife, and minor children."
+    },
+    {
+      "clause_id": "pmkisan-3.2",
+      "section_title": "Eligibility - State identification",
+      "clause_type": "eligibility",
+      "text": "State Government and Union Territory administrations identify the eligible farmer families as per the scheme guidelines."
+    },
+    {
+      "clause_id": "pmkisan-4.1",
+      "section_title": "Exclusion - Institutional landholders",
+      "clause_type": "exclusion",
+      "text": "All institutional landholders are excluded from the scheme."
+    },
+    {
+      "clause_id": "pmkisan-4.2",
+      "section_title": "Exclusion - Constitutional and political office holders",
+      "clause_type": "exclusion",
+      "text": "Former and present holders of constitutional posts, former and present Ministers, members of Parliament and State Legislatures, mayors of municipal corporations, and chairpersons of district panchayats are excluded."
+    },
+    {
+      "clause_id": "pmkisan-4.3",
+      "section_title": "Exclusion - Government employees and pensioners",
+      "clause_type": "exclusion",
+      "text": "Serving or retired officers and employees of state or central government (excluding Class IV or Group D employees), and retired pensioners with a monthly pension of Rs. 10,000 or more (excluding Class IV or Group D), are excluded."
+    },
+    {
+      "clause_id": "pmkisan-4.4",
+      "section_title": "Exclusion - Income tax payers and professionals",
+      "clause_type": "exclusion",
+      "text": "All persons who paid income tax in the last assessment year are excluded. Doctors, engineers, lawyers, chartered accountants, and architects registered with their professional bodies are excluded."
+    },
+    {
+      "clause_id": "pmkisan-4.5",
+      "section_title": "Exclusion - Recent land acquisition",
+      "clause_type": "exclusion",
+      "text": "Farmers who acquired land ownership after February 1, 2019 are excluded from the scheme's original guidelines."
+    }
+  ]
+}

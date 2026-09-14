@@ -1,0 +1,30 @@
+SCHEME: Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)
+STATE: central
+SOURCE: pmkisan.gov.in (live fetch)
+
+[SECTION 1] Overview
+PM-KISAN is a Central Sector scheme, fully funded by the Government of India, providing income support to landholding farmer families across India.
+
+[SECTION 2] Benefit amount
+An income support of Rs. 6,000 per year is provided to all landholding farmer families, payable in three equal installments of Rs. 2,000 every four months.
+
+[SECTION 3.1] Eligibility - Landholding farmer families
+All landholding farmer families are eligible, subject to the exclusion criteria. The definition of family for the scheme is husband, wife, and minor children.
+
+[SECTION 3.2] Eligibility - State identification
+State Government and Union Territory administrations identify the eligible farmer families as per the scheme guidelines.
+
+[SECTION 4.1] Exclusion - Institutional landholders
+All institutional landholders are excluded from the scheme.
+
+[SECTION 4.2] Exclusion - Constitutional and political office holders
+Former and present holders of constitutional posts, former and present Ministers, members of Parliament and State Legislatures, mayors of municipal corporations, and chairpersons of district panchayats are excluded.
+
+[SECTION 4.3] Exclusion - Government employees and pensioners
+Serving or retired officers and employees of state or central government (excluding Class IV or Group D employees), and retired pensioners with a monthly pension of Rs. 10,000 or more (excluding Class IV or Group D), are excluded.
+
+[SECTION 4.4] Exclusion - Income tax payers and professionals
+All persons who paid income tax in the last assessment year are excluded. Doctors, engineers, lawyers, chartered accountants, and architects registered with their professional bodies are excluded.
+
+[SECTION 4.5] Exclusion - Recent land acquisition
+Farmers who acquired land ownership after February 1, 2019 are excluded from the scheme's original guidelines.

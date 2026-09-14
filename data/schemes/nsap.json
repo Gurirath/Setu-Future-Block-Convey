@@ -1,0 +1,25 @@
+{
+  "scheme_id": "nsap",
+  "scheme_name": "National Social Assistance Programme - Indira Gandhi National Old Age Pension Scheme (IGNOAPS)",
+  "state": "central",
+  "clauses": [
+    {
+      "clause_id": "nsap-1.1.1",
+      "section_title": "Destitution definition and scheme origin",
+      "clause_type": "general",
+      "text": "The Government of India introduced the National Social Assistance Programme (NSAP) as a fully funded Centrally Sponsored Scheme targeting the destitutes, defined as any person who has little or no regular means of subsistence from his or her own source of income or through financial support from family members or other sources, to be identified by the States and Union Territories, with the objective of providing a basic level of financial support."
+    },
+    {
+      "clause_id": "nsap-2.3",
+      "section_title": "Eligibility and scale of assistance - IGNOAPS",
+      "clause_type": "eligibility",
+      "text": "The assistance under the sub-schemes of NSAP is applicable for persons belonging to the Below Poverty Line (BPL) category. The eligible age for the Indira Gandhi National Old Age Pension Scheme (IGNOAPS) is 60 years. The pension is Rs. 200 per month for persons between 60 and 79 years. For persons who are 80 years and above, the pension is Rs. 500 per month."
+    },
+    {
+      "clause_id": "nsap-2.4.3",
+      "section_title": "Exclusion criteria",
+      "clause_type": "exclusion",
+      "text": "Only Below Poverty Line persons from the eligible categories are considered under NSAP, except widows suffering from AIDS who will be considered if they are not attracted by any of the exclusion criteria of having a job in government, owning five acres of land or more, or owning a four-wheeler for own use."
+    }
+  ]
+}

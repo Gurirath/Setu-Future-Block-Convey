@@ -1,0 +1,19 @@
+SCHEME: Tamil Nadu Chief Minister's Comprehensive Health Insurance Scheme (CMCHIS)
+STATE: Tamil Nadu
+LAST_VERIFIED: 2026-09-14
+SOURCE: authored from publicly documented scheme criteria, citing GO(Ms) No.560, Health and Family Welfare Department, Government of Tamil Nadu. This is not a fetch of the GO text itself or of an official scheme listing (no working PDF link for this scheme was found in this session, and myscheme.gov.in does not render). The eligibility conditions below should be re-confirmed against the scheme's current official listing before this goes anywhere near production; the benefit amount is the figure most likely to have changed since GO(Ms) No.560 was issued. CMCHIS has been co-branded and integrated with the central Ayushman Bharat PM-JAY scheme since 2018 (as AB-PMJAY-CMCHIS), which is why the scheme text below references AB-PM-JAY by name; it remains a Tamil Nadu state scheme administratively and is tagged state=Tamil Nadu here so it is retrieved and filtered the same way as other Tamil Nadu schemes.
+
+[SECTION 1] Overview
+The Tamil Nadu Chief Minister's Comprehensive Health Insurance Scheme (CMCHIS), co-branded as AB-PMJAY-CMCHIS since its 2018 integration with the central Ayushman Bharat PM-JAY scheme, provides cashless health insurance coverage to eligible Tamil Nadu families for a defined list of medical and surgical procedures at network hospitals, as notified under GO(Ms) No.560, Health and Family Welfare Department, Government of Tamil Nadu.
+
+[SECTION 2] Benefit amount
+Eligible families receive cashless treatment coverage of up to Rs. 5,00,000 per family per year across the scheme's listed procedures.
+
+[SECTION 3.1] Eligibility - Residency
+The applicant must be a resident of Tamil Nadu.
+
+[SECTION 3.2] Eligibility - Family ration card
+The applicant's name must appear on the family's ration card issued in Tamil Nadu.
+
+[SECTION 3.3] Eligibility - Income threshold
+The applicant's annual family income must be under Rs. 1,20,000, as notified under GO(Ms) No.560, Health and Family Welfare Department.

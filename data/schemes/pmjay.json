@@ -1,0 +1,43 @@
+{
+  "scheme_id": "pmjay",
+  "scheme_name": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (PM-JAY)",
+  "state": "central",
+  "clauses": [
+    {
+      "clause_id": "pmjay-I",
+      "section_title": "Overview and beneficiary base",
+      "clause_type": "general",
+      "text": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (AB PM-JAY) is the world's largest health assurance scheme fully financed by the government, providing a health cover of Rs. 5 lakhs per family per year for secondary and tertiary care hospitalization to approximately 10.74 crore poor and vulnerable families, around 50 crore beneficiaries, with no restriction on family size, age, or gender. The scheme provides cashless access to healthcare services for the beneficiary at the point of service."
+    },
+    {
+      "clause_id": "pmjay-III",
+      "section_title": "Benefit amount and coverage",
+      "clause_type": "benefit_amount",
+      "text": "The scheme provides a health cover of Rs. 5 lakhs per family per year for secondary and tertiary care hospitalization across public and private empanelled hospitals in India, covering over 10.74 crore poor and vulnerable families that form the bottom 40% of the Indian population."
+    },
+    {
+      "clause_id": "pmjay-6",
+      "section_title": "Scope of the health benefit package",
+      "clause_type": "general",
+      "text": "Benefits under the scheme's basic risk cover are provided on a cashless basis to beneficiaries up to the limit of Rs. 5,00,000, and include hospitalization expense, day-care treatment where applicable, follow-up care, pre- and post-hospitalization expenses, and coverage for a new-born child or children."
+    },
+    {
+      "clause_id": "pmjay-7",
+      "section_title": "Beneficiary identification mechanism",
+      "clause_type": "general",
+      "text": "Eligibility is determined through the Beneficiary Identification System: an operator searches the entitled beneficiary database, drawn from the Socio-Economic Caste Census (SECC), Rashtriya Swasthya Bima Yojana (RSBY), Additional Data Collection Drive (ADCD), and State Health Scheme databases, to determine whether a person is enlisted as a beneficiary. Only persons found in this verified database are covered."
+    },
+    {
+      "clause_id": "pmjay-3.1",
+      "section_title": "Eligibility - Rural deprivation criteria (authored, not sourced from the Operation Manual; verify against the primary SECC/HBP eligibility guidelines before production use)",
+      "clause_type": "eligibility",
+      "text": "Households in rural areas identified under specific deprivation and automatic-inclusion categories of the Socio-Economic Caste Census 2011 (SECC 2011) are eligible."
+    },
+    {
+      "clause_id": "pmjay-3.2",
+      "section_title": "Eligibility - Urban occupational criteria (authored, not sourced from the Operation Manual; verify against the primary SECC/HBP eligibility guidelines before production use)",
+      "clause_type": "eligibility",
+      "text": "Households in urban areas falling under one of eleven defined occupational vulnerability categories identified in SECC 2011 are eligible."
+    }
+  ]
+}
