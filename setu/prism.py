@@ -55,6 +55,55 @@ class PrismUnconfigured(Exception):
     """No PRISM credentials. Export is skipped, never faked."""
 
 
+def read_credential(suffix: str) -> str | None:
+    """Accept both the SDK's PRISMTRACE_* names and the shorter PRISM_* form."""
+    return os.environ.get(f"PRISMTRACE_{suffix}") or os.environ.get(f"PRISM_{suffix}")
+
+
+_llm_client: list = []
+
+
+def llm_client():
+    """Lazily built shared client for per-call LLM traces. None when unconfigured."""
+    if _llm_client:
+        return _llm_client[0]
+    api_key = read_credential("API_KEY")
+    host = read_credential("HOST")
+    project_id = read_credential("PROJECT_ID")
+    client = None
+    if api_key and host and project_id:
+        try:
+            from prismtrace import PRISMtrace
+            client = PRISMtrace(api_key=api_key, host=host, project_id=project_id)
+        except Exception:
+            client = None
+    _llm_client.append(client)
+    return client
+
+
+def record_llm(model: str, prompt: str, output: str, latency_ms: int,
+               agent_name: str = "setu-eligibility-agent") -> bool:
+    """Record one model call. Never raises and never changes behaviour.
+
+    Every model call in this project funnels through Provider.generate, so wiring
+    this one chokepoint covers all of them -- including any call site added later.
+    """
+    client = llm_client()
+    if client is None:
+        return False
+    try:
+        client.trace_llm(
+            model=model,
+            input_messages=[{"role": "user", "content": prompt[:4000]}],
+            output=(output or "")[:4000],
+            latency_ms=int(latency_ms),
+            agent_name=agent_name,
+        )
+        return True
+    except Exception:
+        return False
+
+
 def _summarise(attrs: dict) -> str:
     if not attrs:
         return ""
@@ -127,11 +176,9 @@ class PrismExporter:
     def from_env(cls, agent_name: str = "setu-eligibility-agent"):
         # The SDK ships as prismtrace, and its dashboard hands out PRISMTRACE_*
         # names. Accept both spellings rather than making the caller rename.
-        def read(suffix):
-            return (os.environ.get(f"PRISMTRACE_{suffix}")
-                    or os.environ.get(f"PRISM_{suffix}"))
-
-        api_key, host, project_id = read("API_KEY"), read("HOST"), read("PROJECT_ID")
+        api_key = read_credential("API_KEY")
+        host = read_credential("HOST")
+        project_id = read_credential("PROJECT_ID")
         missing = [f"PRISMTRACE_{name}" for name, value in
                    (("API_KEY", api_key), ("HOST", host),
                     ("PROJECT_ID", project_id)) if not value]

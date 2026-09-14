@@ -191,3 +191,48 @@ def test_ordering_falls_back_when_seq_is_absent():
     for span in tracer.spans:
         span.pop("seq", None)
     assert len(spans_to_steps(tracer.spans)) == 4
+
+
+def test_record_llm_is_a_silent_noop_without_credentials(monkeypatch):
+    """Tracing must never break a run when PRISM is not configured."""
+    import setu.prism as prism
+    for var in ALL_PRISM_VARS:
+        monkeypatch.delenv(var, raising=False)
+    monkeypatch.setattr(prism, "_llm_client", [])
+    assert prism.record_llm("m", "prompt", "out", 12) is False
+
+
+def test_record_llm_sends_the_call(monkeypatch):
+    import setu.prism as prism
+    captured = {}
+
+    class Client:
+        def trace_llm(self, **kwargs):
+            captured.update(kwargs)
+
+    monkeypatch.setattr(prism, "_llm_client", [Client()])
+    assert prism.record_llm("gpt-x", "hello", "world", 42) is True
+    assert captured["model"] == "gpt-x"
+    assert captured["output"] == "world"
+    assert captured["latency_ms"] == 42
+
+
+def test_record_llm_swallows_transport_errors(monkeypatch):
+    import setu.prism as prism
+
+    class Broken:
+        def trace_llm(self, **kwargs):
+            raise RuntimeError("network down")
+
+    monkeypatch.setattr(prism, "_llm_client", [Broken()])
+    assert prism.record_llm("m", "p", "o", 1) is False
+
+
+def test_every_model_call_goes_through_the_traced_chokepoint():
+    """If a provider stops using _traced, per-call tracing silently disappears."""
+    import inspect
+    from setu import providers
+    for cls in (providers.AnthropicProvider, providers.GeminiProvider,
+                providers.OpenAIProvider):
+        source = inspect.getsource(cls.generate)
+        assert "_traced(" in source, f"{cls.__name__}.generate is not traced"

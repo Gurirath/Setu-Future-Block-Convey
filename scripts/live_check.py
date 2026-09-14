@@ -11,8 +11,15 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from setu.pipeline import answer  # noqa: E402
 from setu.trace import Tracer  # noqa: E402
+from setu.pipeline import export_trace  # noqa: E402
 
 
 def parse_args(argv):

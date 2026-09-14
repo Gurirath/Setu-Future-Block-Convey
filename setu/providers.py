@@ -33,6 +33,18 @@ def _pace():
     _last_call[0] = time.monotonic()
 
 
+def _traced(model: str, prompt: str, call):
+    """Run a model call and record it to PRISM. Tracing never alters the result."""
+    started = time.monotonic()
+    output = call()
+    try:
+        from setu.prism import record_llm
+        record_llm(model, prompt, output, (time.monotonic() - started) * 1000)
+    except Exception:
+        pass
+    return output
+
+
 def with_retries(call):
     """Retry transient rate limits, honouring the delay the API asks for."""
     last = None
@@ -82,12 +94,12 @@ class AnthropicProvider:
         self.model = model or os.environ.get("SETU_MODEL") or DEFAULT_MODELS["anthropic"]
 
     def generate(self, prompt: str, schema: dict | None = None) -> str:
-        response = with_retries(lambda: self._client.messages.create(
-            model=self.model,
-            max_tokens=2000,
-            messages=[{"role": "user", "content": prompt}],
-        ))
-        return response.content[0].text
+        return _traced(self.model, prompt, lambda: with_retries(
+            lambda: self._client.messages.create(
+                model=self.model,
+                max_tokens=2000,
+                messages=[{"role": "user", "content": prompt}],
+            )).content[0].text)
 
 
 class GeminiProvider:
@@ -111,10 +123,10 @@ class GeminiProvider:
                 config.response_json_schema = schema
             except Exception:
                 pass
-        response = with_retries(lambda: self._client.models.generate_content(
-            model=self.model, contents=prompt, config=config,
-        ))
-        return response.text or ""
+        return _traced(self.model, prompt, lambda: (with_retries(
+            lambda: self._client.models.generate_content(
+                model=self.model, contents=prompt, config=config,
+            )).text or ""))
 
 
 class OpenAIProvider:
@@ -134,8 +146,9 @@ class OpenAIProvider:
             # JSON mode only for structured calls. Forcing it on plain-text prompts
             # returns a quoted JSON string instead of the sentence itself.
             kwargs["response_format"] = {"type": "json_object"}
-        response = with_retries(lambda: self._client.chat.completions.create(**kwargs))
-        return response.choices[0].message.content or ""
+        return _traced(self.model, prompt, lambda: (with_retries(
+            lambda: self._client.chat.completions.create(**kwargs)
+        ).choices[0].message.content or ""))
 
 
 def _key_for(provider_name: str) -> str | None:

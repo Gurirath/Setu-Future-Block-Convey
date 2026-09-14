@@ -11,6 +11,7 @@ from setu.anchor import segment, rank
 from setu.compile_rule import compile_rule, CompilationError
 from setu.rules import evaluate, next_unknown_field, TRUE, UNKNOWN
 from setu.trace import Tracer
+from setu.prism import PrismExporter, PrismUnconfigured
 from setu.verify import verify_claim
 
 
@@ -32,9 +33,19 @@ def _sufficient(min_chars: int):
     return check
 
 
+def export_trace(tracer, conversation_id=None, final_status="success", model=None):
+    """Send this run's spans to PRISM. Silent no-op when PRISM is unconfigured."""
+    try:
+        exporter = PrismExporter.from_env()
+    except (PrismUnconfigured, ImportError):
+        return None
+    return exporter.export(tracer, conversation_id=conversation_id,
+                           final_status=final_status, model=model)
+
+
 def answer(source_url: str, profile: dict, query_terms: list[str],
            tracer: Tracer | None = None, min_chars: int = 1000,
-           top_k: int = 12, provider=None) -> Answer:
+           top_k: int = 12, provider=None, export: bool = True) -> Answer:
     tracer = tracer or Tracer()
 
     # 1. ACQUIRE -- real bytes or nothing
