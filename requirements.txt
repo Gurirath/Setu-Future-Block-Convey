@@ -1,6 +1,20 @@
-chromadb
-sentence-transformers
+# Core (required)
+requests
+beautifulsoup4
+pdfplumber
 anthropic
 google-genai
 python-dotenv
 prismtrace-sdk>=0.4.3
+
+# Testing
+pytest
+
+# Headless rung of the acquisition ladder, needed for JS-rendered portals.
+# After installing, fetch the browser: playwright install chromium
+playwright
+
+# Optional: semantic retrieval over anchored spans (lexical ranking is the default
+# and needs no extra dependency)
+# chromadb
+# sentence-transformers
